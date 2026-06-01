@@ -1,0 +1,413 @@
+:root {
+  --bg: #0a0e17;
+  --bg-elev: #111726;
+  --bg-elev-2: #18203250;
+  --border: #233047;
+  --border-soft: #1b2536;
+  --text: #e6edf6;
+  --text-dim: #9aa9bf;
+  --text-faint: #5e6e88;
+
+  --cyan: #2dd4bf;
+  --cyan-glow: #2dd4bf66;
+  --violet: #8b7cf6;
+  --violet-glow: #8b7cf666;
+  --magenta: #e879c9;
+  --amber: #f0b449;
+  --green: #4ade80;
+  --red: #f87171;
+
+  --mono: ui-monospace, 'SF Mono', 'JetBrains Mono', 'Fira Code', Menlo, monospace;
+  --sans: 'Inter', system-ui, -apple-system, 'Hiragino Kaku Gothic ProN', 'Noto Sans JP',
+    sans-serif;
+
+  --radius: 14px;
+  --maxw: 920px;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  background:
+    radial-gradient(1200px 600px at 80% -10%, #1b2440 0%, transparent 60%),
+    radial-gradient(900px 500px at 0% 10%, #161a36 0%, transparent 55%),
+    var(--bg);
+  color: var(--text);
+  font-family: var(--sans);
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+}
+
+a {
+  color: var(--cyan);
+}
+
+.app {
+  max-width: var(--maxw);
+  margin: 0 auto;
+  padding: 0 20px 120px;
+}
+
+/* ---------- Header ---------- */
+.topbar {
+  position: sticky;
+  top: 0;
+  z-index: 20;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 14px 20px;
+  margin: 0 -20px 8px;
+  background: #0a0e17cc;
+  backdrop-filter: blur(10px);
+  border-bottom: 1px solid var(--border-soft);
+}
+.topbar .brand {
+  display: flex;
+  align-items: baseline;
+  gap: 10px;
+}
+.topbar .brand h1 {
+  font-size: 1.05rem;
+  margin: 0;
+  letter-spacing: 0.02em;
+}
+.topbar .brand .key {
+  font-size: 1.2rem;
+}
+
+.lang-btn {
+  font-family: var(--mono);
+  font-size: 0.8rem;
+  color: var(--text);
+  background: var(--bg-elev);
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  padding: 6px 14px;
+  cursor: pointer;
+  transition: border-color 0.15s, color 0.15s;
+}
+.lang-btn:hover {
+  border-color: var(--cyan);
+  color: var(--cyan);
+}
+
+/* ---------- Hero ---------- */
+.hero {
+  padding: 48px 0 28px;
+}
+.hero h2 {
+  font-size: clamp(1.8rem, 4vw, 2.6rem);
+  line-height: 1.15;
+  margin: 0 0 6px;
+  background: linear-gradient(100deg, var(--cyan), var(--violet) 60%, var(--magenta));
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+.hero .sub {
+  color: var(--text-dim);
+  font-size: 1rem;
+  margin: 0 0 22px;
+}
+.hero .intro {
+  font-size: 1.05rem;
+  color: var(--text);
+  max-width: 720px;
+}
+
+.warning {
+  display: flex;
+  gap: 10px;
+  align-items: flex-start;
+  margin: 22px 0 0;
+  padding: 12px 16px;
+  border: 1px solid #4a3a12;
+  background: #2a200a66;
+  border-radius: var(--radius);
+  color: #f5d99a;
+  font-size: 0.88rem;
+}
+.warning .icon {
+  flex-shrink: 0;
+}
+
+/* ---------- Step cards ---------- */
+.step {
+  position: relative;
+  margin: 22px 0;
+  padding: 26px 26px 30px;
+  background: linear-gradient(180deg, var(--bg-elev), #0d1320);
+  border: 1px solid var(--border-soft);
+  border-radius: 18px;
+  scroll-margin-top: 70px;
+}
+.step:hover {
+  border-color: var(--border);
+}
+.step-head {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 6px;
+}
+.step-num {
+  font-family: var(--mono);
+  font-size: 0.78rem;
+  color: var(--bg);
+  background: linear-gradient(135deg, var(--cyan), var(--violet));
+  width: 30px;
+  height: 30px;
+  border-radius: 9px;
+  display: grid;
+  place-items: center;
+  font-weight: 700;
+  flex-shrink: 0;
+}
+.step-head h3 {
+  margin: 0;
+  font-size: 1.25rem;
+}
+.tag {
+  font-family: var(--mono);
+  font-size: 0.68rem;
+  letter-spacing: 0.06em;
+  color: var(--cyan);
+  border: 1px solid var(--cyan);
+  border-radius: 999px;
+  padding: 2px 9px;
+  margin-left: auto;
+}
+.step-desc {
+  color: var(--text-dim);
+  font-size: 0.95rem;
+  margin: 8px 0 20px;
+  max-width: 760px;
+}
+
+/* ---------- Generic UI bits ---------- */
+.row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  align-items: center;
+}
+.seg {
+  display: inline-flex;
+  background: var(--bg);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 3px;
+  gap: 3px;
+}
+.seg button {
+  font-family: var(--sans);
+  font-size: 0.82rem;
+  color: var(--text-dim);
+  background: transparent;
+  border: 0;
+  border-radius: 7px;
+  padding: 6px 14px;
+  cursor: pointer;
+  transition: background 0.15s, color 0.15s;
+}
+.seg button.active {
+  background: var(--bg-elev);
+  color: var(--text);
+  box-shadow: 0 0 0 1px var(--border);
+}
+
+.btn {
+  font-family: var(--sans);
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--bg);
+  background: linear-gradient(135deg, var(--cyan), var(--violet));
+  border: 0;
+  border-radius: 10px;
+  padding: 9px 18px;
+  cursor: pointer;
+  transition: filter 0.15s, transform 0.05s;
+}
+.btn:hover {
+  filter: brightness(1.08);
+}
+.btn:active {
+  transform: translateY(1px);
+}
+
+.field-label {
+  font-size: 0.78rem;
+  color: var(--text-faint);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  margin-bottom: 6px;
+}
+
+.text-input {
+  width: 100%;
+  font-family: var(--mono);
+  font-size: 0.9rem;
+  color: var(--text);
+  background: var(--bg);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 10px 12px;
+}
+.text-input:focus {
+  outline: none;
+  border-color: var(--cyan);
+}
+
+/* ---------- Hex value display ---------- */
+.hexbox {
+  background: var(--bg);
+  border: 1px solid var(--border-soft);
+  border-radius: 10px;
+  padding: 12px 14px;
+  position: relative;
+}
+.hexbox .hex {
+  font-family: var(--mono);
+  font-size: 0.82rem;
+  word-break: break-all;
+  line-height: 1.7;
+  color: var(--text);
+}
+.hexbox .hex.dim {
+  color: var(--text-dim);
+}
+.hexbox .meta {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 7px;
+}
+.hexbox .meta .label {
+  font-size: 0.72rem;
+  color: var(--text-faint);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+.copy-btn {
+  font-family: var(--mono);
+  font-size: 0.68rem;
+  color: var(--text-dim);
+  background: var(--bg-elev);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 3px 9px;
+  cursor: pointer;
+}
+.copy-btn:hover {
+  color: var(--cyan);
+  border-color: var(--cyan);
+}
+
+.hl-left {
+  color: var(--cyan);
+}
+.hl-right {
+  color: var(--violet);
+}
+
+/* ---------- Sliders ---------- */
+input[type='range'] {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 100%;
+  height: 4px;
+  border-radius: 4px;
+  background: var(--border);
+  outline: none;
+}
+input[type='range']::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, var(--cyan), var(--violet));
+  cursor: pointer;
+  box-shadow: 0 0 0 4px var(--cyan-glow);
+}
+input[type='range']::-moz-range-thumb {
+  width: 18px;
+  height: 18px;
+  border: 0;
+  border-radius: 50%;
+  background: var(--violet);
+  cursor: pointer;
+}
+
+/* ---------- Avalanche meter ---------- */
+.meter {
+  height: 8px;
+  border-radius: 999px;
+  background: var(--bg);
+  border: 1px solid var(--border-soft);
+  overflow: hidden;
+}
+.meter > span {
+  display: block;
+  height: 100%;
+  background: linear-gradient(90deg, var(--cyan), var(--magenta));
+  transition: width 0.3s ease;
+}
+
+/* ---------- Word grid (Step 1) ---------- */
+.words {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(130px, 1fr));
+  gap: 8px;
+}
+.word {
+  display: flex;
+  align-items: baseline;
+  gap: 8px;
+  background: var(--bg);
+  border: 1px solid var(--border-soft);
+  border-radius: 9px;
+  padding: 8px 10px;
+}
+.word .n {
+  font-family: var(--mono);
+  font-size: 0.7rem;
+  color: var(--text-faint);
+  min-width: 16px;
+}
+.word .w {
+  font-family: var(--mono);
+  font-size: 0.9rem;
+  color: var(--text);
+}
+.word.checksum {
+  border-color: var(--amber);
+}
+
+.label-line {
+  font-size: 0.82rem;
+  color: var(--text-dim);
+  margin: 14px 0 8px;
+}
+.muted {
+  color: var(--text-faint);
+  font-size: 0.8rem;
+}
+
+@media (max-width: 560px) {
+  .step {
+    padding: 20px 16px 24px;
+  }
+  .tag {
+    display: none;
+  }
+}

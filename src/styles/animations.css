@@ -1,0 +1,62 @@
+/* When a derived value updates, we remount it with a changing React key so this
+   flash re-triggers — making the "value just changed" propagation visible. */
+@keyframes valueFlash {
+  0% {
+    background-color: var(--cyan-glow);
+    border-color: var(--cyan);
+  }
+  100% {
+    background-color: transparent;
+  }
+}
+.flash {
+  animation: valueFlash 0.7s ease-out;
+}
+
+/* Connector lines in the tree: a light pulse travels along the stroke. */
+@keyframes dashFlow {
+  to {
+    stroke-dashoffset: -16;
+  }
+}
+.flow-line {
+  stroke-dasharray: 4 4;
+  animation: dashFlow 0.8s linear infinite;
+}
+
+@keyframes fadeUp {
+  from {
+    opacity: 0;
+    transform: translateY(6px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+.fade-up {
+  animation: fadeUp 0.35s ease-out;
+}
+
+@keyframes popIn {
+  from {
+    opacity: 0;
+    transform: scale(0.92);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+.pop-in {
+  animation: popIn 0.25s ease-out;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .flash,
+  .flow-line,
+  .fade-up,
+  .pop-in {
+    animation: none;
+  }
+}

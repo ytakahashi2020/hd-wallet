@@ -1,0 +1,211 @@
+/* ---------- Derivation tree (Step 4) ---------- */
+.tree {
+  margin: 4px 0 8px;
+  overflow-x: auto;
+  padding: 4px 2px 8px;
+}
+
+.tnode-wrap {
+  position: relative;
+}
+
+/* Children indent and draw a left rail with elbow connectors. */
+.tchildren {
+  margin-left: 26px;
+  padding-left: 18px;
+  border-left: 1.5px solid var(--border);
+}
+
+.tnode {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  margin: 4px 0;
+  padding: 7px 12px;
+  font-family: var(--mono);
+  font-size: 0.82rem;
+  color: var(--text);
+  background: var(--bg);
+  border: 1px solid var(--border);
+  border-radius: 9px;
+  cursor: pointer;
+  position: relative;
+  transition: border-color 0.15s, background 0.15s, box-shadow 0.15s;
+}
+.tnode:hover:not(:disabled) {
+  border-color: var(--cyan);
+}
+.tnode.open {
+  border-color: var(--cyan);
+  box-shadow: 0 0 0 1px var(--cyan-glow);
+}
+.tnode.root {
+  background: linear-gradient(135deg, #14203a, #1a1530);
+  border-color: var(--violet);
+  font-weight: 600;
+}
+.tnode:disabled {
+  cursor: default;
+  opacity: 0.85;
+}
+
+/* elbow connector from the rail to each child node */
+.tchildren > .tnode-wrap > .tnode::before {
+  content: '';
+  position: absolute;
+  left: -18px;
+  top: 50%;
+  width: 16px;
+  height: 1.5px;
+  background: var(--border);
+}
+
+.tnode-path {
+  color: var(--cyan);
+}
+.tnode.root .tnode-path {
+  color: var(--violet);
+}
+.tnode-fp {
+  color: var(--text-faint);
+  font-size: 0.74rem;
+}
+.tnode-caret {
+  color: var(--text-dim);
+  font-size: 0.95rem;
+  width: 12px;
+  text-align: center;
+}
+
+/* ---------- Compare panel ---------- */
+.compare {
+  margin-top: 22px;
+  padding: 18px;
+  background: var(--bg-elev-2);
+  border: 1px solid var(--border-soft);
+  border-radius: 14px;
+}
+.compare-title {
+  font-weight: 600;
+  font-size: 1rem;
+  margin-bottom: 2px;
+}
+.compare-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+  margin-top: 8px;
+}
+.compare-card {
+  padding: 14px;
+  border-radius: 11px;
+  background: var(--bg);
+  border: 1px solid var(--border);
+}
+.compare-card.normal {
+  border-color: #2f6b5a;
+}
+.compare-card.hard {
+  border-color: #5a3f7a;
+}
+.compare-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  margin-bottom: 8px;
+  flex-wrap: wrap;
+}
+.badge {
+  font-size: 0.68rem;
+  padding: 2px 8px;
+  border-radius: 999px;
+  white-space: nowrap;
+}
+.badge.ok {
+  color: var(--green);
+  border: 1px solid #2f6b5a;
+  background: #10271f;
+}
+.badge.warn {
+  color: var(--violet);
+  border: 1px solid #5a3f7a;
+  background: #1d152b;
+}
+.mono {
+  font-family: var(--mono);
+}
+.fp {
+  font-size: 0.78rem;
+  color: var(--text-dim);
+  word-break: break-all;
+}
+
+@media (max-width: 560px) {
+  .compare-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* ---------- Summary (Step 6) ---------- */
+.summary-phrase {
+  padding: 14px 16px;
+  border-radius: 12px;
+  background: linear-gradient(135deg, #14203a, #1a1530);
+  border: 1px solid var(--violet);
+  margin-bottom: 18px;
+}
+.phrase-text {
+  font-size: 0.9rem;
+  line-height: 1.8;
+  color: var(--text);
+  word-spacing: 4px;
+}
+.summary-rows {
+  display: grid;
+  gap: 8px;
+}
+.summary-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 10px 14px;
+  background: var(--bg);
+  border: 1px solid var(--border-soft);
+  border-radius: 10px;
+}
+.summary-row .sym {
+  font-size: 1.1rem;
+  width: 22px;
+  text-align: center;
+  color: var(--cyan);
+}
+.srow-main {
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+  flex: 1;
+  min-width: 0;
+}
+.srow-coin {
+  font-size: 0.88rem;
+}
+.srow-path {
+  font-size: 0.72rem;
+  color: var(--text-faint);
+}
+.srow-addr {
+  font-size: 0.8rem;
+  color: var(--violet);
+  white-space: nowrap;
+}
+.closing {
+  margin-top: 22px;
+  text-align: center;
+  font-size: 1.05rem;
+  color: var(--text);
+  background: linear-gradient(100deg, var(--cyan), var(--violet));
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
