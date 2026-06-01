@@ -3,7 +3,9 @@
 import { mnemonicToSeed } from '../src/crypto/seed.js'
 import { masterFromSeed, derivePath } from '../src/crypto/hdkey.js'
 import { isValidMnemonic } from '../src/crypto/mnemonic.js'
-import { btcP2pkh, btcP2wpkh, ethAddress } from '../src/crypto/address.js'
+import { btcP2pkh, btcP2wpkh, ethAddress, solAddress } from '../src/crypto/address.js'
+import { ed25519DerivePath, ed25519PublicKey, ed25519MasterFromSeed } from '../src/crypto/ed25519.js'
+import { ed25519Segments } from '../src/crypto/paths.js'
 import { bytesToHex } from '../src/crypto/format.js'
 
 let pass = 0
@@ -60,6 +62,32 @@ check(
   'seed with passphrase "TREZOR"',
   bytesToHex(seedPass),
   'c55257c360c07c72029aebc1b53c05ed0362ada38ead3e3e9efa3708e53495531f09a6987599d18264c1e1c92f2cf141630c7a3c4ab7c81b2f001698e7463b04',
+)
+
+console.log('\nSLIP-0010 ed25519 (Solana)')
+// Official SLIP-0010 ed25519 test vector 1: seed = 000102...0f, chain m.
+const slipSeed = Uint8Array.from(
+  '000102030405060708090a0b0c0d0e0f'.match(/../g).map((h) => parseInt(h, 16)),
+)
+const slipMaster = ed25519MasterFromSeed(slipSeed)
+check(
+  'SLIP-0010 master private key',
+  bytesToHex(slipMaster.key),
+  '2b4be7f19ee27bbf30c667b642d5f4aa69fd169872f8fc3059c08ebae2eb19e7',
+)
+check(
+  'SLIP-0010 master chain code',
+  bytesToHex(slipMaster.chainCode),
+  '90046a93de5380a72b5e45010748567d5ea02bbf6522f979e05c0d8d8ca9fffb',
+)
+
+// Solana address at the standard Phantom path m/44'/501'/0'/0' for the test
+// mnemonic, derived end-to-end through the demo's own functions.
+const solNode = ed25519DerivePath(seed, ed25519Segments({ coinType: 501, account: 0, index: 0 }))
+check(
+  "SOL m/44'/501'/0'/0'",
+  solAddress(ed25519PublicKey(solNode)),
+  'HAgk14JpMQLgt6rVgv7cBQFJWFto5Dqxi472uT3DKpqk',
 )
 
 console.log(`\n${pass} passed, ${fail} failed`)

@@ -78,11 +78,13 @@ export const messages = {
       'A normal child (index i) can be derived from the parent public key alone — handy, but it means leaking one child key + the parent public key can expose siblings. A hardened child (index i′ = i + 2³¹) requires the parent private key, severing that link. That is why account-level paths are hardened.',
     'step4.normalBadge': 'Derivable from public key',
     'step4.hardenedBadge': 'Requires private key',
+    'step4.curveNote':
+      'This normal-vs-hardened choice is specific to secp256k1 (Bitcoin, Ethereum). Solana uses ed25519, where only hardened derivation exists — there is no "normal" side at all.',
 
     'step5.title': 'Derivation path',
     'step5.tag': 'BIP-44',
     'step5.desc':
-      'BIP-44 gives the tree a standard shape: m / purpose′ / coin′ / account′ / change / index. Move the sliders and switch coins — the final address recomputes instantly.',
+      'BIP-44 gives the tree a standard shape: m / purpose′ / coin′ / account′ / change / index. Move the sliders and switch coins — the final address recomputes instantly. Note Solana: it shares the same phrase but uses a different curve and path.',
     'step5.coin': 'Coin',
     'step5.account': 'Account',
     'step5.change': 'Change',
@@ -95,11 +97,15 @@ export const messages = {
     'step5.segChange': 'change',
     'step5.segIndex': 'index',
     'step5.resultAddress': 'Address at this path',
+    'step5.curveSecp': 'secp256k1 · BIP-32 derivation (Bitcoin, Ethereum)',
+    'step5.curveEd': 'ed25519 · SLIP-0010 derivation (Solana)',
+    'step5.solNote':
+      'Solana uses ed25519, where every level must be hardened — so the path is m/44′/501′/account′/index′ with no change/index split, and Step 4’s "normal" derivation does not exist here.',
 
     'step6.title': 'One phrase, everything',
     'step6.tag': 'Summary',
     'step6.desc':
-      'All of these addresses — different coins, accounts and indexes — descend from the single phrase at the top. Back up those words and every key below can be recreated, anywhere, forever. Lose them and nothing can.',
+      'All of these addresses — different coins, two different elliptic curves (secp256k1 and ed25519), accounts and indexes — descend from the single phrase at the top. Back up those words and every key below can be recreated, anywhere, forever. Lose them and nothing can.',
     'step6.fromPhrase': 'From this phrase',
     'step6.derivesAll': 'all of these are recreated:',
     'step6.closing':
@@ -183,11 +189,13 @@ export const messages = {
       '通常の子（インデックス i）は親の公開鍵だけからでも導出できます。便利ですが、1つの子の鍵と親の公開鍵が漏れると兄弟の鍵まで露出しかねません。ハードン化された子（インデックス i′ = i + 2³¹）は親の秘密鍵を必要とし、その繋がりを断ち切ります。アカウント階層がハードン化されるのはこのためです。',
     'step4.normalBadge': '公開鍵から導出可能',
     'step4.hardenedBadge': '秘密鍵が必要',
+    'step4.curveNote':
+      'この「通常 vs ハードン化」の選択は secp256k1（Bitcoin・Ethereum）に特有です。Solanaが使うed25519では、ハードン化導出しか存在しません。「通常」側そのものが無いのです。',
 
     'step5.title': '導出パス',
     'step5.tag': 'BIP-44',
     'step5.desc':
-      'BIP-44はツリーに標準的な形を与えます： m / purpose′ / coin′ / account′ / change / index。スライダーを動かしコインを切り替えると、最終的なアドレスが即座に再計算されます。',
+      'BIP-44はツリーに標準的な形を与えます： m / purpose′ / coin′ / account′ / change / index。スライダーを動かしコインを切り替えると、最終的なアドレスが即座に再計算されます。Solanaに注目：同じフレーズを使いますが、曲線もパスも違います。',
     'step5.coin': 'コイン',
     'step5.account': 'アカウント',
     'step5.change': 'チェンジ',
@@ -200,11 +208,15 @@ export const messages = {
     'step5.segChange': 'change',
     'step5.segIndex': 'index',
     'step5.resultAddress': 'このパスのアドレス',
+    'step5.curveSecp': 'secp256k1 · BIP-32導出（Bitcoin・Ethereum）',
+    'step5.curveEd': 'ed25519 · SLIP-0010導出（Solana）',
+    'step5.solNote':
+      'Solanaはed25519を使い、すべての階層がハードン化必須です。そのためパスは m/44′/501′/account′/index′ となり、change/indexの区別はありません。Step4の「通常」導出はここには存在しません。',
 
     'step6.title': '1つのフレーズが、すべて',
     'step6.tag': 'まとめ',
     'step6.desc':
-      'これらのアドレスは — コインもアカウントもインデックスも違うのに — すべて一番上にある1つのフレーズから派生しています。この単語さえバックアップすれば、下のすべての鍵をいつでもどこでも何度でも復元できます。失えば、何も取り戻せません。',
+      'これらのアドレスは — コインも、2種類の異なる曲線（secp256k1とed25519）も、アカウントもインデックスも違うのに — すべて一番上にある1つのフレーズから派生しています。この単語さえバックアップすれば、下のすべての鍵をいつでもどこでも何度でも復元できます。失えば、何も取り戻せません。',
     'step6.fromPhrase': 'このフレーズから',
     'step6.derivesAll': 'これらすべてが復元されます：',
     'step6.closing': 'サーバーもデータベースもいりません。フレーズこそがウォレットです。',

@@ -4,7 +4,7 @@ import { sha256 } from '@noble/hashes/sha2.js'
 import { keccak_256 } from '@noble/hashes/sha3.js'
 import { ripemd160 } from '@noble/hashes/legacy.js'
 import { secp256k1 } from '@noble/curves/secp256k1.js'
-import { bech32, base58check } from '@scure/base'
+import { bech32, base58check, base58 } from '@scure/base'
 import { bytesToHex } from './format.js'
 
 const b58check = base58check(sha256)
@@ -53,7 +53,14 @@ function toChecksumAddress(addrLowerNoPrefix) {
   return out
 }
 
-// Dispatch by coin type used in Step 5 / Step 6.
+// Solana: the address IS the base58-encoded ed25519 public key (32 bytes).
+// `pubkey` is the raw 32-byte ed25519 public key (NOT a secp256k1 HDKey node).
+export function solAddress(pubkey) {
+  return base58.encode(pubkey)
+}
+
+// Dispatch by coin type used in Step 5 / Step 6. For secp256k1 chains `node`
+// is an HDKey; Solana is handled separately (different curve) via solAddress.
 export function deriveAddress(node, coin) {
   switch (coin) {
     case 'ETH':

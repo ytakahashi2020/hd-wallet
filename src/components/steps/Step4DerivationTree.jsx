@@ -59,6 +59,7 @@ export default function Step4DerivationTree() {
             <div className="mono fp">{compare.hard.fp}…</div>
           </div>
         </div>
+        <div className="curve-caveat">ⓘ {t('step4.curveNote')}</div>
       </div>
     </StepCard>
   )

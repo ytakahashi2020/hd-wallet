@@ -1,35 +1,42 @@
 import { useMemo, useState } from 'react'
 import { useI18n } from '../../i18n/I18nContext.jsx'
 import { useWallet } from '../../state/WalletContext.jsx'
-import { COINS, buildPath, pathSegments, PURPOSE } from '../../crypto/paths.js'
-import { deriveAddress } from '../../crypto/address.js'
+import { COINS, buildPath, pathSegments, ed25519Segments } from '../../crypto/paths.js'
+import { deriveAddress, solAddress } from '../../crypto/address.js'
+import { ed25519DerivePath, ed25519PublicKey } from '../../crypto/ed25519.js'
 import StepCard from '../common/StepCard.jsx'
 import Slider from '../common/Slider.jsx'
 import HexValue from '../common/HexValue.jsx'
 
 export default function Step5Bip44Path() {
   const { t } = useI18n()
-  const { derive } = useWallet()
+  const { derive, seed } = useWallet()
 
   const [coin, setCoin] = useState('BTC')
   const [account, setAccount] = useState(0)
   const [change, setChange] = useState(0)
   const [index, setIndex] = useState(0)
 
-  const coinType = COINS[coin].type
-  const params = { coinType, account, change, index }
+  const meta = COINS[coin]
+  const isEd25519 = meta.curve === 'ed25519'
+  const coinType = meta.type
+  const params = { coinType, account, change, index, curve: meta.curve }
   const path = buildPath(params)
   const segments = pathSegments(params)
 
   const { address, error } = useMemo(() => {
     try {
+      if (isEd25519) {
+        // Solana: SLIP-0010 over ed25519, then base58 of the public key.
+        const node = ed25519DerivePath(seed, ed25519Segments({ coinType, account, index }))
+        return { address: solAddress(ed25519PublicKey(node)), error: null }
+      }
       const node = derive(path)
-      const kind = coin === 'BTC' ? 'BTC' : 'ETH'
-      return { address: deriveAddress(node, kind), error: null }
+      return { address: deriveAddress(node, meta.addressKind), error: null }
     } catch (e) {
       return { address: '', error: String(e) }
     }
-  }, [derive, path, coin])
+  }, [isEd25519, seed, derive, path, coinType, account, index, meta.addressKind])
 
   const segLabel = {
     purpose: t('step5.segPurpose'),
@@ -50,7 +57,7 @@ export default function Step5Bip44Path() {
           gap: 4,
           fontFamily: 'var(--mono)',
           fontSize: '1.05rem',
-          marginBottom: 20,
+          marginBottom: 14,
         }}
         key={path}
       >
@@ -76,7 +83,13 @@ export default function Step5Bip44Path() {
         ))}
       </div>
 
-      <div className="row" style={{ marginBottom: 16 }}>
+      {/* Curve badge — makes the secp256k1 vs ed25519 split explicit */}
+      <div className={`curve-badge ${isEd25519 ? 'ed' : 'secp'}`} key={meta.curve}>
+        <span className="curve-dot" />
+        {isEd25519 ? t('step5.curveEd') : t('step5.curveSecp')}
+      </div>
+
+      <div className="row" style={{ margin: '16px 0' }}>
         <div>
           <div className="field-label">{t('step5.coin')}</div>
           <div className="seg">
@@ -94,20 +107,29 @@ export default function Step5Bip44Path() {
         <Slider label={t('step5.index')} value={index} min={0} max={9} onChange={setIndex} />
       </div>
 
-      <div style={{ marginBottom: 20 }}>
-        <div className="field-label">{t('step5.change')}</div>
-        <div className="seg">
-          <button className={change === 0 ? 'active' : ''} onClick={() => setChange(0)}>
-            {t('step5.changeExternal')}
-          </button>
-          <button className={change === 1 ? 'active' : ''} onClick={() => setChange(1)}>
-            {t('step5.changeInternal')}
-          </button>
+      {/* Bitcoin/Ethereum have a non-hardened change level; Solana does not. */}
+      {!isEd25519 && (
+        <div style={{ marginBottom: 20 }}>
+          <div className="field-label">{t('step5.change')}</div>
+          <div className="seg">
+            <button className={change === 0 ? 'active' : ''} onClick={() => setChange(0)}>
+              {t('step5.changeExternal')}
+            </button>
+            <button className={change === 1 ? 'active' : ''} onClick={() => setChange(1)}>
+              {t('step5.changeInternal')}
+            </button>
+          </div>
         </div>
-      </div>
+      )}
+
+      {isEd25519 && (
+        <div className="muted" style={{ marginBottom: 18 }}>
+          {t('step5.solNote')}
+        </div>
+      )}
 
       <HexValue
-        label={`${COINS[coin].label} · ${t('step5.resultAddress')}`}
+        label={`${meta.label} · ${t('step5.resultAddress')}`}
         value={error ? '⚠ ' + error : address}
         flashKey={path + coin}
       />

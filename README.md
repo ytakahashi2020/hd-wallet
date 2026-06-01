@@ -14,15 +14,18 @@ education only.
 2. **Seed** — PBKDF2 stretch + the avalanche effect of a passphrase
 3. **Master key (BIP-32)** — HMAC-SHA512 split into private key + chain code
 4. **Derivation tree (BIP-32)** — expandable tree, normal vs. hardened
-5. **Derivation path (BIP-44)** — `m/44'/coin'/account'/change/index` → live address
-6. **Summary** — one phrase recreates every address (BTC / ETH)
+5. **Derivation path (BIP-44)** — `m/44'/coin'/account'/change/index` → live address,
+   including Solana on a different curve (ed25519 / SLIP-0010)
+6. **Summary** — one phrase recreates every address (BTC / ETH / SOL)
 
 ## Cryptography
 
 All values are real, derived in the browser with the audited
 [`@scure`](https://github.com/paulmillr/scure-bip32) / `@noble` libraries
-(no `Buffer` polyfill needed). Correctness is checked against known BIP-39/32/44
-test vectors:
+(no `Buffer` polyfill needed). Bitcoin and Ethereum use secp256k1 / BIP-32;
+Solana uses ed25519 / SLIP-0010 (a hand-rolled derivation verified against the
+official SLIP-0010 test vectors). Correctness is checked against known
+BIP-39/32/44 and SLIP-0010 test vectors:
 
 ```bash
 npm run verify

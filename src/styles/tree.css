@@ -105,6 +105,49 @@
   }
 }
 
+/* ---------- Curve badge (Step 5) + caveat (Step 4) ---------- */
+.curve-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 0.76rem;
+  font-family: var(--mono);
+  padding: 5px 12px;
+  border-radius: 999px;
+  border: 1px solid var(--border);
+}
+.curve-badge .curve-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+}
+.curve-badge.secp {
+  color: var(--cyan);
+  border-color: #1f5a52;
+  background: #0e2420;
+}
+.curve-badge.secp .curve-dot {
+  background: var(--cyan);
+}
+.curve-badge.ed {
+  color: var(--magenta);
+  border-color: #5a2f54;
+  background: #2a1226;
+}
+.curve-badge.ed .curve-dot {
+  background: var(--magenta);
+}
+.curve-caveat {
+  margin-top: 14px;
+  padding: 10px 13px;
+  border-radius: 10px;
+  background: #2a1226;
+  border: 1px solid #5a2f54;
+  color: #e7a9d8;
+  font-size: 0.82rem;
+  line-height: 1.5;
+}
+
 /* ---------- Compare panel ---------- */
 .compare {
   margin-top: 22px;

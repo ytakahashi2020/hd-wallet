@@ -1,34 +1,40 @@
 import { useMemo } from 'react'
 import { useI18n } from '../../i18n/I18nContext.jsx'
 import { useWallet } from '../../state/WalletContext.jsx'
-import { deriveAddress } from '../../crypto/address.js'
+import { deriveAddress, solAddress } from '../../crypto/address.js'
+import { ed25519DerivePath, ed25519PublicKey } from '../../crypto/ed25519.js'
 import { truncate } from '../../crypto/format.js'
 import StepCard from '../common/StepCard.jsx'
 
-// A fixed set of paths to show that many different addresses all descend from
-// the one phrase.
+// A fixed set of paths to show that many different addresses — across coins AND
+// across two different elliptic curves — all descend from the one phrase.
 const ROWS = [
   { coin: 'Bitcoin', symbol: '₿', kind: 'BTC', path: "m/44'/0'/0'/0/0" },
-  { coin: 'Bitcoin (change)', symbol: '₿', kind: 'BTC', path: "m/44'/0'/0'/1/0" },
   { coin: 'Bitcoin (SegWit)', symbol: '₿', kind: 'BTC-SEGWIT', path: "m/84'/0'/0'/0/0" },
   { coin: 'Ethereum', symbol: 'Ξ', kind: 'ETH', path: "m/44'/60'/0'/0/0" },
   { coin: 'Ethereum #1', symbol: 'Ξ', kind: 'ETH', path: "m/44'/60'/0'/0/1" },
+  { coin: 'Solana', symbol: '◎', kind: 'SOL', path: "m/44'/501'/0'/0'", segments: [44, 501, 0, 0] },
+  { coin: 'Solana #1', symbol: '◎', kind: 'SOL', path: "m/44'/501'/1'/0'", segments: [44, 501, 1, 0] },
 ]
 
 export default function Step6Summary() {
   const { t } = useI18n()
-  const { derive, mnemonic } = useWallet()
+  const { derive, seed, mnemonic } = useWallet()
 
   const rows = useMemo(
     () =>
       ROWS.map((r) => {
         try {
+          if (r.kind === 'SOL') {
+            const node = ed25519DerivePath(seed, r.segments)
+            return { ...r, address: solAddress(ed25519PublicKey(node)) }
+          }
           return { ...r, address: deriveAddress(derive(r.path), r.kind) }
         } catch {
           return { ...r, address: '—' }
         }
       }),
-    [derive],
+    [derive, seed],
   )
 
   return (
