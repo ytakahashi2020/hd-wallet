@@ -100,7 +100,7 @@ export const messages = {
     'step5.curveSecp': 'secp256k1 · BIP-32 derivation (Bitcoin, Ethereum)',
     'step5.curveEd': 'ed25519 · SLIP-0010 derivation (Solana)',
     'step5.solNote':
-      'Solana uses ed25519, where every level must be hardened — so the path is m/44′/501′/account′/index′ with no change/index split, and Step 4’s "normal" derivation does not exist here.',
+      'Solana uses ed25519, where every level must be hardened — so the path is m/44′/501′/account′/index′ (the index itself is hardened, and there is no separate change level), and Step 4’s "normal" derivation does not exist here.',
 
     'step6.title': 'One phrase, everything',
     'step6.tag': 'Summary',
@@ -110,6 +110,9 @@ export const messages = {
     'step6.derivesAll': 'all of these are recreated:',
     'step6.closing':
       'No server, no database. The phrase is the wallet.',
+
+    'footer.role1': 'Solana Foundation — External DevRel, Japan',
+    'footer.role2': 'CAC Corporation — Blockchain Promotion Group',
   },
 
   ja: {
@@ -211,7 +214,7 @@ export const messages = {
     'step5.curveSecp': 'secp256k1 · BIP-32導出（Bitcoin・Ethereum）',
     'step5.curveEd': 'ed25519 · SLIP-0010導出（Solana）',
     'step5.solNote':
-      'Solanaはed25519を使い、すべての階層がハードン化必須です。そのためパスは m/44′/501′/account′/index′ となり、change/indexの区別はありません。Step4の「通常」導出はここには存在しません。',
+      'Solanaはed25519を使い、すべての階層がハードン化必須です。そのためパスは m/44′/501′/account′/index′ となり（indexもハードン化され、changeの階層はありません）、Step4の「通常」導出はここには存在しません。',
 
     'step6.title': '1つのフレーズが、すべて',
     'step6.tag': 'まとめ',
@@ -220,5 +223,8 @@ export const messages = {
     'step6.fromPhrase': 'このフレーズから',
     'step6.derivesAll': 'これらすべてが復元されます：',
     'step6.closing': 'サーバーもデータベースもいりません。フレーズこそがウォレットです。',
+
+    'footer.role1': 'Solana Foundation — External DevRel Japan',
+    'footer.role2': 'CAC株式会社 — ブロックチェーン推進グループ',
   },
 }

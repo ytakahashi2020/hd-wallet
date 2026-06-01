@@ -2,6 +2,7 @@ import { useI18n } from './i18n/I18nContext.jsx'
 import LanguageToggle from './components/common/LanguageToggle.jsx'
 import StepNav from './components/common/StepNav.jsx'
 import Term from './components/common/Term.jsx'
+import Footer from './components/common/Footer.jsx'
 import Step1Mnemonic from './components/steps/Step1Mnemonic.jsx'
 import Step2Seed from './components/steps/Step2Seed.jsx'
 import Step3MasterKey from './components/steps/Step3MasterKey.jsx'
@@ -47,6 +48,8 @@ export default function App() {
       <Step4DerivationTree />
       <Step5Bip44Path />
       <Step6Summary />
+
+      <Footer />
     </div>
   )
 }

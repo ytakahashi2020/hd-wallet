@@ -1,5 +1,4 @@
 // BIP-44 path construction: m / purpose' / coin_type' / account' / change / index
-import { HARDENED_OFFSET } from './hdkey.js'
 
 // SLIP-44 coin types used in the demo. `curve` distinguishes the secp256k1
 // chains (BIP-32 derivation) from Solana (ed25519 / SLIP-0010 derivation).
@@ -45,9 +44,4 @@ export function pathSegments({ coinType, account, change, index, curve }) {
 // m/44'/501'/account'/index' → [44, 501, account, index].
 export function ed25519Segments({ coinType, account, index }) {
   return [PURPOSE, coinType, account, index]
-}
-
-// True if a raw BIP-32 index is hardened.
-export function isHardenedIndex(index) {
-  return index >= HARDENED_OFFSET
 }

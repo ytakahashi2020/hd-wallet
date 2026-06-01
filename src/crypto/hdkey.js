@@ -25,18 +25,3 @@ export function derivePath(master, path) {
 export function formatIndex(index, hardened) {
   return hardened ? `${index}'` : `${index}`
 }
-
-// Expose the key material we want to show. publicKey is the 33-byte compressed
-// point; privateKey/chainCode are 32 bytes each. xpub/xprv are the serialized
-// extended keys.
-export function keyMaterial(node) {
-  return {
-    privateKey: node.privateKey, // Uint8Array(32) or null for pub-only keys
-    publicKey: node.publicKey, // Uint8Array(33)
-    chainCode: node.chainCode, // Uint8Array(32)
-    xpub: node.publicExtendedKey,
-    xprv: node.privateKey ? node.privateExtendedKey : null,
-    index: node.index,
-    depth: node.depth,
-  }
-}

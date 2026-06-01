@@ -11,10 +11,6 @@ const GLOSSARY = {
     en: 'A few extra bits computed from the data, used to catch typos.',
     ja: 'データから計算される数ビットの検査値。打ち間違いを検出します。',
   },
-  pbkdf2: {
-    en: 'A deliberately slow function that repeats 2048 times to make guessing expensive.',
-    ja: 'わざと遅くした関数。2048回繰り返して総当たりを高コストにします。',
-  },
   hmac: {
     en: 'A keyed hash: mixes a secret key with data to produce a fixed-size output.',
     ja: '鍵付きハッシュ。秘密の鍵とデータを混ぜて固定長の出力を作ります。',

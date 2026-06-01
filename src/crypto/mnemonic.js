@@ -2,7 +2,6 @@
 // UI can visualise the 11-bit-per-word structure.
 import {
   generateMnemonic as bip39Generate,
-  entropyToMnemonic,
   mnemonicToEntropy,
   validateMnemonic,
 } from '@scure/bip39'
@@ -11,20 +10,6 @@ import { sha256 } from '@noble/hashes/sha2.js'
 import { bytesToBits } from './format.js'
 
 export { englishWordlist }
-
-// strengthBits: 128 → 12 words, 256 → 24 words.
-export function wordCountForStrength(strengthBits) {
-  return (strengthBits / 32) * 3
-}
-
-// Generate fresh entropy ourselves (so we can show it), then derive the words
-// from it. Returns both the raw entropy and the resulting mnemonic.
-export function generateFromEntropy(strengthBits = 128) {
-  const entropy = new Uint8Array(strengthBits / 8)
-  crypto.getRandomValues(entropy)
-  const mnemonic = entropyToMnemonic(entropy, englishWordlist)
-  return { entropy, mnemonic }
-}
 
 export function generateMnemonic(strengthBits = 128) {
   return bip39Generate(englishWordlist, strengthBits)
