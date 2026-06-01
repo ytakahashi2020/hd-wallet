@@ -7,7 +7,8 @@ import {
   validateMnemonic,
 } from '@scure/bip39'
 import { wordlist as englishWordlist } from '@scure/bip39/wordlists/english.js'
-import { bytesToBits, chunk } from './format.js'
+import { sha256 } from '@noble/hashes/sha2.js'
+import { bytesToBits } from './format.js'
 
 export { englishWordlist }
 
@@ -38,29 +39,44 @@ export function mnemonicToEntropyBytes(mnemonic) {
 }
 
 // Build the data needed to visualise how entropy + checksum become words.
-// BIP-39: append a checksum of (strength/32) bits, then split into 11-bit
-// groups; each group is an index into the 2048-word list.
+// BIP-39: take ENT bits of entropy, append a checksum of CS = ENT/32 bits
+// (the first CS bits of SHA256(entropy)), then split the combined ENT+CS bits
+// into 11-bit groups; each group is an index into the 2048-word list.
+//
+// Because the words ARE that bit string re-chunked, we reconstruct the exact
+// entropy+checksum bit sequence and tag, within each 11-bit group, which bits
+// are entropy and which are checksum. This keeps the picture faithful to the
+// spec instead of just showing each word's index in isolation.
 export function entropyToWordGroups(mnemonic) {
   const entropy = mnemonicToEntropyBytes(mnemonic)
   const words = mnemonic.trim().split(/\s+/)
-  const entropyBits = bytesToBits(entropy)
-  const checksumBitLen = entropy.length / 4 // CS = ENT / 32 bits
-  const allBits = entropyBits // checksum bits are appended internally; we recompute groups from indices
 
-  // Each word is an 11-bit index into the wordlist.
-  const groups = words.map((w) => {
-    const index = englishWordlist.indexOf(w)
+  const entropyBits = bytesToBits(entropy) // ENT bits
+  const checksumBitLen = entropy.length / 4 // CS = ENT / 32 bits
+  const checksumBits = bytesToBits(sha256(entropy)).slice(0, checksumBitLen)
+  const allBits = entropyBits + checksumBits // ENT + CS, the source of the words
+  const entropyBitLen = entropyBits.length
+
+  // Each word is an 11-bit slice of allBits. Tag each bit as entropy/checksum
+  // by its absolute position so the UI can colour the checksum tail.
+  const groups = words.map((w, i) => {
+    const start = i * 11
+    const slice = allBits.slice(start, start + 11)
+    const bits = slice.split('').map((bit, j) => ({
+      bit,
+      checksum: start + j >= entropyBitLen,
+    }))
     return {
       word: w,
-      index,
-      bits: index >= 0 ? index.toString(2).padStart(11, '0') : '???????????',
+      index: englishWordlist.indexOf(w),
+      bits, // array of { bit, checksum }
     }
   })
 
   return {
     entropy,
     entropyBits,
-    entropyChunks: chunk(entropyBits, 11),
+    checksumBits,
     checksumBitLen,
     groups,
   }

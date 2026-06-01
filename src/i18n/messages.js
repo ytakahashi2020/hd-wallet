@@ -9,6 +9,11 @@ export const messages = {
     'app.warning':
       'Demo only. Never put real funds into any phrase or address shown here — they are generated in your browser for learning.',
     'lang.toggle': '日本語',
+    'app.glossary': 'Key terms:',
+    'term.entropy': 'entropy',
+    'term.checksum': 'checksum',
+    'term.chaincode': 'chain code',
+    'term.hardened': 'hardened',
 
     'nav.step': 'Step',
     'common.regenerate': 'Regenerate',
@@ -31,8 +36,19 @@ export const messages = {
     'step1.words12': '12 words',
     'step1.words24': '24 words',
     'step1.entropyLabel': 'Random entropy',
-    'step1.entropyHint': 'Each row = 11 bits = one word index (0–2047).',
-    'step1.checksumNote': 'The last word also encodes a checksum.',
+    'step1.showBits': 'Show the bits',
+    'step1.hideBits': 'Hide the bits',
+    'step1.entropyHint':
+      'Each group is 11 bits = one word. Amber bits at the end are the checksum, not entropy.',
+    'step1.checksumNote':
+      'The amber checksum bits are derived from the entropy, so a typo makes them disagree.',
+    'step1.legendEntropy': 'entropy',
+    'step1.legendChecksum': 'checksum',
+    'step1.tamperHint': 'Click any word to mistype it — watch the checksum catch it.',
+    'step1.cascadeHint': 'Change this and every step below recomputes.',
+    'step1.valid': 'Checksum OK — valid phrase',
+    'step1.invalid': 'Checksum mismatch — this typo is detectable',
+    'step1.restore': 'Restore',
 
     'step2.title': 'Seed',
     'step2.tag': 'BIP-39',
@@ -47,7 +63,7 @@ export const messages = {
     'step3.tag': 'BIP-32',
     'step3.desc':
       'The seed is run through HMAC-SHA512. The left 256 bits become the master private key; the right 256 bits become the chain code (extra randomness mixed into every child). Together they are the root of the whole tree.',
-    'step3.split': 'HMAC-SHA512(seed) → left half + right half',
+    'step3.split': 'HMAC-SHA512(key = "Bitcoin seed", data = seed) → left half + right half',
     'step3.leftHalf': 'Left 256 bits → master private key',
     'step3.rightHalf': 'Right 256 bits → chain code',
 
@@ -98,6 +114,11 @@ export const messages = {
     'app.warning':
       'これはデモです。ここに表示されるフレーズやアドレスには絶対に実資産を入れないでください。学習用にブラウザ内で生成されています。',
     'lang.toggle': 'English',
+    'app.glossary': '用語：',
+    'term.entropy': 'エントロピー',
+    'term.checksum': 'チェックサム',
+    'term.chaincode': 'チェーンコード',
+    'term.hardened': 'ハードン化',
 
     'nav.step': 'ステップ',
     'common.regenerate': '再生成',
@@ -120,8 +141,19 @@ export const messages = {
     'step1.words12': '12単語',
     'step1.words24': '24単語',
     'step1.entropyLabel': '乱数エントロピー',
-    'step1.entropyHint': '各行 = 11ビット = 単語のインデックス（0〜2047）。',
-    'step1.checksumNote': '最後の単語にはチェックサムも含まれます。',
+    'step1.showBits': 'ビットを見る',
+    'step1.hideBits': 'ビットを隠す',
+    'step1.entropyHint':
+      '各グループ = 11ビット = 1単語。末尾の橙色のビットはエントロピーではなくチェックサムです。',
+    'step1.checksumNote':
+      '橙色のチェックサムビットはエントロピーから計算されるため、打ち間違えると値が食い違います。',
+    'step1.legendEntropy': 'エントロピー',
+    'step1.legendChecksum': 'チェックサム',
+    'step1.tamperHint': '単語をクリックして打ち間違えてみてください。チェックサムが検出します。',
+    'step1.cascadeHint': 'これを変えると、下のすべてのステップが再計算されます。',
+    'step1.valid': 'チェックサムOK — 有効なフレーズ',
+    'step1.invalid': 'チェックサム不一致 — この打ち間違いは検出できます',
+    'step1.restore': '元に戻す',
 
     'step2.title': 'シード',
     'step2.tag': 'BIP-39',
@@ -136,7 +168,7 @@ export const messages = {
     'step3.tag': 'BIP-32',
     'step3.desc':
       'シードをHMAC-SHA512に通します。左256ビットがマスター秘密鍵、右256ビットがチェーンコード（すべての子鍵に混ぜ込まれる追加の乱数）になります。この2つがツリー全体の根（ルート）です。',
-    'step3.split': 'HMAC-SHA512(シード) → 左半分 + 右半分',
+    'step3.split': 'HMAC-SHA512(鍵 = "Bitcoin seed", データ = シード) → 左半分 + 右半分',
     'step3.leftHalf': '左256ビット → マスター秘密鍵',
     'step3.rightHalf': '右256ビット → チェーンコード',
 

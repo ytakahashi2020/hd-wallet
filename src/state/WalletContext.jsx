@@ -43,6 +43,9 @@ export function WalletProvider({ children }) {
       seed,
       master,
       derive,
+      // Changes whenever an upstream input (mnemonic or passphrase) changes, so
+      // downstream UI can react and visualise the deterministic cascade.
+      revision: `${mnemonic}|${passphrase}`,
     }),
     [strengthBits, mnemonic, passphrase, regenerate, setWordCount, seed, master, derive],
   )

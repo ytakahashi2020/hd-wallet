@@ -77,6 +77,34 @@
   text-align: center;
 }
 
+/* ---------- Master key split (Step 3) ---------- */
+.split-arrows {
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.78rem;
+  margin: 8px 4px 10px;
+}
+.split-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+}
+.split-grid .hexbox:first-child {
+  border-color: #2f6b5a;
+}
+.split-grid .hexbox:last-child {
+  border-color: #5a3f7a;
+}
+@media (max-width: 560px) {
+  .split-grid {
+    grid-template-columns: 1fr;
+  }
+  .split-arrows {
+    flex-direction: column;
+    gap: 2px;
+  }
+}
+
 /* ---------- Compare panel ---------- */
 .compare {
   margin-top: 22px;
